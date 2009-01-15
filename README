@@ -32,7 +32,8 @@ mu.get_rsvps HASH_PARAMS
 
 Call the method using keyword args containing the parameters of the
 query (identical to parameters described on the main documentation
-page). For example, find all the events around zip 94108:
+page - http://www.meetup.com/meetup_api/docs/). For example, find all
+the events around zip 94108:
 
 local_events = mu.get_events :zip => 94108
 
@@ -58,4 +59,9 @@ Of course, if you just wanted to only get the RSVP's, you can simply
 call MeetupApi::Client#get_rsvps directly:
 
 rsvps = mu.get_rsvps :event_id => 9348580
+
+== To Do
+* Currently, only MeetupApi::Client#get_events and get_rsvps are
+  implemented; so, finish the other client methods.
+* Implement OAuth
 

@@ -1,0 +1,42 @@
+= Meetup API
+
+== Developers
+* {Bosco So}[http://boscomonkey.com] <rubymeetup _AT_ boscoso _DOT_ com>
+
+== Description
+Meetup API is a port of the official Python client released by Meetup for their API. This port provides an object based API to query or update Meetup data via pure Ruby.  It hides the ugly HTTP/REST calls from your code.
+
+The Meetup Python API client can be found at http://www.meetup.com/meetup_api/clients/
+
+== External Dependencies
+* Ruby (tested with 1.8.6)
+* net/http
+* json (tested with versions: 1.1.3)
+
+== Usage Examples
+Start by creating an instance of the Meetup object with your API key as the constructor argument. You can get your API key at http://www.meetup.com/meetup_api/key/
+
+mu = MeetupApi::Client.new 'your_api_key'
+
+Then, you can query the API directly by using one of the following methods:
+
+mu.get_events HASH_PARAMS
+mu.get_rsvps HASH_PARAMS
+
+Call the method using keyword args containing the parameters of the query (identical to parameters described on the main documentation page). For example, find all the events around zip 94108:
+
+local_events = mu.get_events :zip => 94108
+
+Another example, find the event with id 9348580 (the results method still returns an array, but it only has 1 element):
+
+ruby_events = mu.get_events :id => 9348580
+
+The returned value will be an object of type MeetupApi::ApiResponse. This object's property meta is a Hash containing all the metadata from the query results. The property results is an Array containing objects of type MeetupApi::Event or MeetupApi::Rsvp (depending which MeetupApi::Client method was used). These objects support additional methods that will make API calls to get more information (taking the MeetupApi::Client object as an argument to make the request). For example, take the first event from the first query above and retrieve its RSVP's:
+
+first_event = ruby_events.results.first
+rsvps = first_event.get_rsvps mu
+
+Of course, if you just wanted to only get the RSVP's, you can simply call MeetupApi::Client#get_rsvps directly:
+
+rsvps = mu.get_rsvps :event_id => 9348580
+

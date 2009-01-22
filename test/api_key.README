@@ -1,0 +1,4 @@
+# Copy this file to api_key.rb but make sure you get a real key first
+# from http://www.meetup.com/meetup_api/key/
+#
+API_KEY = "dummy key"
